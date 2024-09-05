@@ -30,7 +30,20 @@ fs.readFile(`./txt/start.txt`, "utf-8", (err, data1) => {
 
 // Node Farm Project
 const server = http.createServer((req, res) => {
-  res.end("Hello from the server");
+  const path = req.url;
+  if (path === "/" || path === "/overview") {
+    res.end("This is the overview page");
+  } else if (path === "/product") {
+    res.end("This is the product page");
+  } else if (path === "/api") {
+    res.end("This is the api page");
+  } else {
+    res.writeHead(404, {
+      "Content-type": "text/html",
+      "my-header": "headd",
+    });
+    res.end("<h1>Page not Found<h1/>");
+  }
 });
 
 server.listen(8000, "127.0.0.1", (err) => {
