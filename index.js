@@ -29,6 +29,9 @@ fs.readFile(`./txt/start.txt`, 'utf-8', (err, data1) => {
 });
 
 // Node Farm Project
+const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
+const productData = JSON.parse(data);
+
 const server = http.createServer((req, res) => {
   const path = req.url;
   // The Overview page
@@ -41,13 +44,15 @@ const server = http.createServer((req, res) => {
 
     // The API page
   } else if (path === '/api') {
-    fs.readFile(`${__dirname}/dev-data/data.json`, 'utf-8', (err, data) => {
-      const productData = JSON.parse(data);
-      console.log(productData);
+    // fs.readFile(`${__dirname}/dev-data/data.json`, 'utf-8', (err, data) => {
+    //   const productData = JSON.parse(data);
+    //   console.log(productData);
 
-      res.writeHead(200, { 'Content-type': 'application/json' });
-      res.end(data);
-    });
+    //   res.writeHead(200, { 'Content-type': 'application/json' });
+    //   res.end(data);
+    // });
+    res.writeHead(200, { 'Content-type': 'application/json' });
+    res.end(data);
 
     // Page not Found page
   } else {
