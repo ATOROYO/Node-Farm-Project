@@ -1,5 +1,6 @@
 const fs = require("fs");
-const https = require("https");
+const http = require("http");
+const path = require("path");
 
 // Synchronous way of reading and writng
 const input = fs.readFileSync("txt/input.txt", "utf-8");
@@ -28,11 +29,11 @@ fs.readFile(`./txt/start.txt`, "utf-8", (err, data1) => {
 });
 
 // Node Farm Project
-const server = https.createServer((req, res) => {
+const server = http.createServer((req, res) => {
   res.end("Hello from the server");
 });
 
-server(8000, "127.0.0.1", (err) => {
+server.listen(8000, "127.0.0.1", (err) => {
   console.log();
   ("Listening to request from port 8000");
 });
