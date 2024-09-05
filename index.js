@@ -29,6 +29,21 @@ fs.readFile(`./txt/start.txt`, 'utf-8', (err, data1) => {
 });
 
 // Node Farm Project
+// Assigning data from the html files to their variables
+const tempCard = fs.readFileSync(
+  `${__dirname}/templates/template-card.html`,
+  'utf-8'
+);
+const tempOverview = fs.readFileSync(
+  `${__dirname}/templates/template-overview.html`,
+  'utf-8'
+);
+const tempProduct = fs.readFileSync(
+  `${__dirname}/templates/template-product.html`,
+  'utf-8'
+);
+
+// Fetching from the API
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
 const productData = JSON.parse(data);
 
