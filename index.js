@@ -1,5 +1,6 @@
 const fs = require('fs');
 const http = require('http');
+const url = require('url');
 const path = require('path');
 
 // Synchronous way of reading and writng
@@ -65,23 +66,25 @@ const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
 const productData = JSON.parse(data);
 
 const server = http.createServer((req, res) => {
-  const path = req.url;
+  // const path = req.url;
+  const { query, pathname } = url.parse(req.url, true);
+
   // The Overview page
-  if (path === '/' || path === '/overview') {
+  if (pathname === '/' || pathname === '/overview') {
     res.writeHead(200, { 'Content-type': 'text/html' });
     const html = productData.map(el => replaceTemps(tempCard, el)).join('');
     const output = tempOverview.replaceAll('{%PRODUCT_CARDS%}', html);
     res.end(output);
 
     // The product page
-  } else if (path === '/product') {
+  } else if (pathname === '/product') {
     res.writeHead(200, { 'Content-type': 'text/html' });
-    const product = productData;
+    const product = productData[query.id];
     const output = replaceTemps(tempProduct, product);
     res.end(output);
 
     // The API page
-  } else if (path === '/api') {
+  } else if (pathname === '/api') {
     // fs.readFile(`${__dirname}/dev-data/data.json`, 'utf-8', (err, data) => {
     //   const productData = JSON.parse(data);
     //   console.log(productData);
