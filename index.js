@@ -68,11 +68,17 @@ const server = http.createServer((req, res) => {
   const path = req.url;
   // The Overview page
   if (path === '/' || path === '/overview') {
-    res.end('This is the overview page');
+    res.writeHead(200, { 'Content-type': 'text/html' });
+    const html = productData.map(el => replaceTemps(tempCard, el)).join('');
+    const output = tempOverview.replaceAll('{%PRODUCT_CARDS%}', html);
+    res.end(output);
 
     // The product page
   } else if (path === '/product') {
-    res.end('This is the product page');
+    res.writeHead(200, { 'Content-type': 'text/html' });
+    const product = productData;
+    const output = replaceTemps(tempProduct, product);
+    res.end(output);
 
     // The API page
   } else if (path === '/api') {
